@@ -20,10 +20,15 @@ public class ProductEntity extends Auditable {
     @JsonIgnore
     @Column(columnDefinition = "TEXT") // Định nhĩa kiểu dữ liệu cho 'description' = TEXT
     private String description;     //Mô tả
+
     @NumberFormat(pattern = "#")
+    @Column(name = "original_price", nullable = false)
     private Double originalPrice;   //Giá gốc
+
     @NumberFormat(pattern = "#")
+    @Column(name = "sale_price", nullable = false)
     private Double salePrice;       //Giá bán
+
     @NumberFormat(pattern = "#")
     private Integer stock;          //Số lượng sản phẩm trong kho
     private Integer status;         //Trạng thái của sản phẩm
@@ -47,4 +52,5 @@ public class ProductEntity extends Auditable {
     @OneToMany(mappedBy = "product")
     @JsonIgnore
     private List<OrderDetailEntity> orders; //Danh sách chi tiết đơn đặt hàng
+
 }

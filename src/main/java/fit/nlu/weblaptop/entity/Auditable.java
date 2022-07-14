@@ -23,18 +23,22 @@ public abstract class Auditable {
 
     @JsonIgnore
     @CreatedDate
+    @Column(name = "created_date")
     private Date createdDate;
 
     @JsonIgnore
     @LastModifiedDate
+    @Column(name = "modified_date")
     private Date modifiedDate;
 
     @JsonIgnore
     @CreatedBy
+    @Column(name = "created_by")
     private String createdBy;
 
     @JsonIgnore
     @LastModifiedBy
+    @Column(name = "modified_by")
     private String modifiedBy;
 
 }
