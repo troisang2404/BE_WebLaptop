@@ -24,8 +24,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Optional<ProductEntity> findDetailById(Long id) {
-        return productRepository.findById(id);
+    public Optional<ProductEntity> findOneById(Long id) {
+        return productRepository.findOneById(id);
     }
 
     @Override
@@ -34,8 +34,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Page<ProductEntity> findByCategoryId(BrandEntity id, Pageable pageable) {
-        return productRepository.findByBrand(id, pageable);
+    public List<ProductEntity> findByCategoryId(BrandEntity id) {
+        return productRepository.findByBrand(id);
     }
 
     @Override
@@ -59,17 +59,17 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Page<ProductEntity> findProductUnder10tr(Pageable pageable) {
-        return productRepository.findByPriceUnder10tr(pageable);
+    public List<ProductEntity> findProductUnder10tr() {
+        return productRepository.findByPriceUnder10tr();
     }
 
     @Override
-    public Page<ProductEntity> findProductUnder20tr(Pageable pageable) {
-        return productRepository.findByPriceUnder20tr(pageable);
+    public List<ProductEntity> findProductUnder20tr() {
+        return productRepository.findByPriceUnder20tr();
     }
 
     @Override
-    public Page<ProductEntity> findProductTop20Tr(Pageable pageable) {
-        return productRepository.findByPriceTop20tr(pageable);
+    public List<ProductEntity> findProductTop20Tr() {
+        return productRepository.findByPriceTop20tr();
     }
 }

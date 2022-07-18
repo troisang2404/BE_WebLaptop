@@ -21,6 +21,11 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
+    public BrandEntity findOneById(Long id) {
+        return brandRepository.findOneById(id);
+    }
+
+    @Override
     public List<BrandEntity> findByBrandName(String brandName) {
         return brandRepository.findByName(brandName);
     }

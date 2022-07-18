@@ -9,22 +9,25 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
     List<ProductEntity> findByName(String name);
 
-    Page<ProductEntity> findByBrand(BrandEntity brandEntity, Pageable pageable);
+    Optional<ProductEntity> findOneById(Long id);
+
+    List<ProductEntity> findByBrand(BrandEntity brandEntity);
 
     Page<ProductEntity> findByNameIgnoreCaseContainingAndStatus(String name, Integer status, Pageable pageable);
 
     @Query(value = "select p from ProductEntity p where p.salePrice between 5000000 and 10000000")
-    Page<ProductEntity> findByPriceUnder10tr(Pageable pageable);
+    List<ProductEntity> findByPriceUnder10tr();
 
     @Query(value = "select p from ProductEntity p where p.salePrice between 10000000 and 20000000")
-    Page<ProductEntity> findByPriceUnder20tr(Pageable pageable);
+    List<ProductEntity> findByPriceUnder20tr();
 
     @Query(value = "select p from ProductEntity p where p.salePrice > 20000000")
-    Page<ProductEntity> findByPriceTop20tr(Pageable pageable);
+    List<ProductEntity> findByPriceTop20tr();
 
 }

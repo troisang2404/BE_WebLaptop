@@ -8,6 +8,8 @@ import java.util.Optional;
 public interface BrandService {
     Optional<BrandEntity> findById(Long id);
 
+    BrandEntity findOneById(Long id);
+
     List<BrandEntity> findAllFetchEager();
 
     List<BrandEntity> findByBrandName(String brandName);

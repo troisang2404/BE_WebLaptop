@@ -13,6 +13,8 @@ public interface BrandRepository extends JpaRepository<BrandEntity, Long> {
 
     List<BrandEntity> findByName(String name);
 
+    BrandEntity findOneById(Long id);
+
     @Query("select distinct b from BrandEntity b left join fetch b.product p")
     List<BrandEntity> findAllFetchEager();
 }

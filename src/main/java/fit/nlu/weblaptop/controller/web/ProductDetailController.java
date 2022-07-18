@@ -5,13 +5,14 @@ import fit.nlu.weblaptop.entity.ProductEntity;
 import fit.nlu.weblaptop.service.BrandService;
 import fit.nlu.weblaptop.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.ui.Model;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -23,17 +24,12 @@ public class ProductDetailController {
     @Autowired
     BrandService brandService;
 
-//    @GetMapping("/detail/{id}")
-//    public String show(Model model,
-//                       @PathVariable(name = "id") Long id) {
-//        ProductEntity productEntity = productService.findDetailById(id);
-//        BrandEntity brandEntity = brandService.findOneById(productEntity.getBrand().getId());
-//
-//        Page<ProductEntity> page = productService.findByCategoryId(brandEntity, PageRequest.of(0, 5));
-//        model.addAttribute("pagedetail", page);
-//        model.addAttribute("detail", productEntity);
-//        return "web/detail";
-//    }
+    @GetMapping("/detail/{id}")
+    public ResponseEntity<List<ProductEntity>> showDetail(@PathVariable(name = "id") Long id) {
+        Optional<ProductEntity> productEntity = productService.findOneById(id);
+        BrandEntity brandEntity = brandService.findOneById(productEntity.get().getBrand().getId());
+        return ResponseEntity.ok(productService.findByCategoryId(brandEntity));
+    }
 
     @GetMapping("/detail")
     public String detail() {

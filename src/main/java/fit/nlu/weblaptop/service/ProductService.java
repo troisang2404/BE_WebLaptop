@@ -12,11 +12,11 @@ public interface ProductService {
 
     ProductEntity save(ProductEntity product);
 
-    Optional<ProductEntity> findDetailById(Long id);
+    Optional<ProductEntity> findOneById(Long id);
 
     Optional<ProductEntity> findById(Long id);
 
-    Page<ProductEntity> findByCategoryId(BrandEntity id, Pageable pageable);
+    List<ProductEntity> findByCategoryId(BrandEntity id);
 
     Page<ProductEntity> findAllPaging(Pageable pageable);
 
@@ -24,11 +24,11 @@ public interface ProductService {
 
     Page<ProductEntity> searchAutocomplete(String key, Pageable pageable);
 
-    Page<ProductEntity> findProductUnder10tr(Pageable pageable);
+    List<ProductEntity> findProductUnder10tr();
 
-    Page<ProductEntity> findProductUnder20tr(Pageable pageable);
+    List<ProductEntity> findProductUnder20tr();
 
-    Page<ProductEntity> findProductTop20Tr(Pageable pageable);
+    List<ProductEntity> findProductTop20Tr();
 
     List<ProductEntity> findByProductName(String productName);
 }
