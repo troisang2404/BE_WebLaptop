@@ -5,7 +5,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @EqualsAndHashCode(callSuper = true)
 @Getter
@@ -26,5 +28,13 @@ public class UserEntity extends Auditable {
      */
     @ManyToMany
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "userid"), inverseJoinColumns = @JoinColumn(name = "roleid"))
-    private List<RoleEntity> roles;
+    private Set<RoleEntity> roles = new HashSet<>();
+
+    public UserEntity() {
+    }
+    public UserEntity(String name, String email, String password) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
 }

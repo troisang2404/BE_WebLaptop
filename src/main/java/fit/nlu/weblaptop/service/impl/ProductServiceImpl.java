@@ -23,10 +23,10 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.save(product);
     }
 
-    @Override
-    public Optional<ProductEntity> findOneById(Long id) {
-        return productRepository.findOneById(id);
-    }
+//    @Override
+//    public Optional<ProductEntity> findOneById(Long id) {
+//        return productRepository.findOneById(id);
+//    }
 
     @Override
     public Optional<ProductEntity> findById(Long id) {

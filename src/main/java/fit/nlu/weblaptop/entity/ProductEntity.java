@@ -17,7 +17,7 @@ import java.util.List;
 public class ProductEntity extends Auditable {
 
     private String name;
-    @JsonIgnore
+//    @JsonIgnore
     @Column(columnDefinition = "TEXT") // Định nhĩa kiểu dữ liệu cho 'description' = TEXT
     private String description;     //Mô tả
 
@@ -39,18 +39,18 @@ public class ProductEntity extends Auditable {
      */
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn
-    @JsonIgnore
+//    @JsonIgnore
     private BrandEntity brand;//Một sản phẩm chỉ thuộc một danh mục hàng hóa
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "product")
-    @JsonIgnore
+//    @JsonIgnore
     private ConfigEntity config;//Cấu hình sản phẩm
 
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<ImageEntity> image;//Một sản phẩm có thể có nhiều ảnh
 
     @OneToMany(mappedBy = "product")
-    @JsonIgnore
+//    @JsonIgnore
     private List<OrderDetailEntity> orders; //Danh sách chi tiết đơn đặt hàng
 
 }

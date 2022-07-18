@@ -26,6 +26,12 @@ public class RoleEntity extends Auditable{
     @Column(name = "name", nullable = false)
     private String name;
 
+    public RoleEntity() {
+    }
+    public RoleEntity(ERole code) {
+        this.code = code;
+    }
+
     @ManyToMany(mappedBy = "roles")
     private List<UserEntity> users = new ArrayList<>();
 }

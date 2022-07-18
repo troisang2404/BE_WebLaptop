@@ -12,7 +12,7 @@ public interface ProductService {
 
     ProductEntity save(ProductEntity product);
 
-    Optional<ProductEntity> findOneById(Long id);
+//    Optional<ProductEntity> findOneById(Long id);
 
     Optional<ProductEntity> findById(Long id);
 

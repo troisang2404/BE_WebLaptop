@@ -1,0 +1,29 @@
+package fit.nlu.weblaptop.service.impl;
+
+import fit.nlu.weblaptop.entity.UserEntity;
+import fit.nlu.weblaptop.repository.UserRepository;
+import fit.nlu.weblaptop.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.Optional;
+
+public class UserServiceImpl implements UserService {
+
+//    @Autowired
+//    private UserRepository userRepository;
+//
+//    @Override
+//    public Optional<UserEntity> findByUsername(String username) {
+//        return userRepository.findByUsername(username);
+//    }
+//
+//    @Override
+//    public Boolean existsByUsername(String username) {
+//        return userRepository.existsByUsername(username);
+//    }
+//
+//    @Override
+//    public Boolean existsByEmail(String email) {
+//        return userRepository.existsByEmail(email);
+//    }
+}
