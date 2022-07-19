@@ -1,7 +1,7 @@
 package fit.nlu.weblaptop.controller.admin;
 
 import fit.nlu.weblaptop.entity.BrandEntity;
-import fit.nlu.weblaptop.entity.ResponseObject;
+import fit.nlu.weblaptop.payload.response.ResponseObject;
 import fit.nlu.weblaptop.service.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

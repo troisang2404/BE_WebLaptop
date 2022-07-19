@@ -21,15 +21,15 @@ public class RoleEntity extends Auditable{
 
     @Enumerated(EnumType.STRING)
     @Column(length = 20)
-    private ERole code;
+    private ERole name;
 
-    @Column(name = "name", nullable = false)
-    private String name;
 
     public RoleEntity() {
     }
-    public RoleEntity(ERole code) {
-        this.code = code;
+
+    public RoleEntity(Long id, ERole name) {
+        this.id = id;
+        this.name = name;
     }
 
     @ManyToMany(mappedBy = "roles")

@@ -1,4 +1,4 @@
-package fit.nlu.weblaptop.entity;
+package fit.nlu.weblaptop.payload.response;
 
 import lombok.Getter;
 import lombok.Setter;
