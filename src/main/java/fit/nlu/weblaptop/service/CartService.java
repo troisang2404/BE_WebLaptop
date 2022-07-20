@@ -1,19 +1,22 @@
-package fit.nlu.weblaptop.repository;
+package fit.nlu.weblaptop.service;
 
 import fit.nlu.weblaptop.entity.CartEntity;
 import fit.nlu.weblaptop.entity.ProductEntity;
 import fit.nlu.weblaptop.entity.UserEntity;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
-@Repository
-public interface CartRepository extends JpaRepository<CartEntity, Long> {
-    List<CartEntity> findByUser(Optional<UserEntity> userEntity);
+public interface CartService {
+    void save(CartEntity cartEntity);
+
+    List<CartEntity> findAllByUser(Optional<UserEntity> userEntity);
+
+    void deleteById(Long id);
 
     CartEntity findOneById(Long id);
+
+    Double totalPrice(Optional<UserEntity> userEntity);
 
     CartEntity findOneByProduct(ProductEntity productEntity);
 

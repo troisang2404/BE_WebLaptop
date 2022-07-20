@@ -13,6 +13,7 @@ import fit.nlu.weblaptop.service.RoleService;
 import fit.nlu.weblaptop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -54,7 +55,7 @@ public class AuthController {
                 passwordEncoder.encode(registerForm.getPassword()),
                 registerForm.getName(),
                 registerForm.getPhone(),
-                registerForm.getStatus()
+                1
         );
         Set<String> strRoles = registerForm.getRoles();
         Set<RoleEntity> roles = new HashSet<>();
@@ -105,5 +106,8 @@ public class AuthController {
                 userDetails.getAuthorities()
         ));
     }
-
+    @GetMapping("/hello")
+    public String adminAccess() {
+        return "Hello World";
+    }
 }
