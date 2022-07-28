@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface VillageRepository extends JpaRepository<VillageEntity, Long> {
+    VillageEntity findOneById(Long id);
 }

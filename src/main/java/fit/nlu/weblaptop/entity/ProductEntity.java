@@ -50,7 +50,7 @@ public class ProductEntity extends Auditable {
     private List<ImageEntity> image;//Một sản phẩm có thể có nhiều ảnh
 
     @OneToMany(mappedBy = "product")
-//    @JsonIgnore
+    @JsonIgnore
     private List<OrderDetailEntity> orders; //Danh sách chi tiết đơn đặt hàng
 
 }

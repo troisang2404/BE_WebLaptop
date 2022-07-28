@@ -3,17 +3,16 @@ package fit.nlu.weblaptop.controller.web;
 import fit.nlu.weblaptop.entity.ERole;
 import fit.nlu.weblaptop.entity.RoleEntity;
 import fit.nlu.weblaptop.entity.UserEntity;
-import fit.nlu.weblaptop.payload.request.LoginForm;
-import fit.nlu.weblaptop.payload.response.JwtResponse;
-import fit.nlu.weblaptop.payload.response.ResponseObject;
-import fit.nlu.weblaptop.payload.request.RegisterForm;
+import fit.nlu.weblaptop.dto.request.LoginForm;
+import fit.nlu.weblaptop.dto.response.JwtResponse;
+import fit.nlu.weblaptop.dto.response.ResponseObject;
+import fit.nlu.weblaptop.dto.request.RegisterForm;
 import fit.nlu.weblaptop.security.jwt.JwtTokenProvider;
 import fit.nlu.weblaptop.security.service.UserDetailsImpl;
 import fit.nlu.weblaptop.service.RoleService;
 import fit.nlu.weblaptop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -27,8 +26,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@RequestMapping("/auth")
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
+@RequestMapping("/auth")
 public class AuthController {
     @Autowired
     private UserService userService;
@@ -98,12 +98,15 @@ public class AuthController {
         // Trả về jwt cho người dùng.
         String token = jwtTokenProvider.createToken(authentication);
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        List<String> roles = userDetails.getAuthorities().stream()
+                .map(item -> item.getAuthority())
+                .collect(Collectors.toList());
         return ResponseEntity.ok(new JwtResponse(
                 token,
                 userDetails.getUsername(),
                 userDetails.getName(),
                 userDetails.getEmail(),
-                userDetails.getAuthorities()
+                roles
         ));
     }
     @GetMapping("/hello")

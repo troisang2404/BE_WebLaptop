@@ -1,7 +1,7 @@
 package fit.nlu.weblaptop.controller.admin;
 
 import fit.nlu.weblaptop.entity.ProductEntity;
-import fit.nlu.weblaptop.payload.response.ResponseObject;
+import fit.nlu.weblaptop.dto.response.ResponseObject;
 import fit.nlu.weblaptop.service.BrandService;
 import fit.nlu.weblaptop.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,8 +65,8 @@ public class ProductController {
                     new ResponseObject("failed", "Product name already taken", "")
             );
         }
-        newProduct.getImage().forEach(image -> image.setProduct(newProduct)); //Set product cho image
-        newProduct.getConfig().setProduct(newProduct);
+//        newProduct.getImage().forEach(image -> image.setProduct(newProduct)); //Set product cho image
+//        newProduct.getConfig().setProduct(newProduct);
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 new ResponseObject("ok", "Insert product successfully", productService.save(newProduct))
         );

@@ -1,5 +1,7 @@
 package fit.nlu.weblaptop.service.impl;
 
+import fit.nlu.weblaptop.dto.CartDto;
+import fit.nlu.weblaptop.dto.CartItemDto;
 import fit.nlu.weblaptop.entity.CartEntity;
 import fit.nlu.weblaptop.entity.ProductEntity;
 import fit.nlu.weblaptop.entity.UserEntity;
@@ -9,8 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CartServiceImpl implements CartService {
@@ -24,8 +26,25 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public List<CartEntity> findAllByUser(Optional<UserEntity> userEntity) {
+    public List<CartEntity> findAllByUser(UserEntity userEntity) {
         return cartRepository.findByUser(userEntity);
+    }
+
+    @Override
+    public CartDto listCartItems(UserEntity user) {
+        List<CartEntity> cartList = cartRepository.findByUser(user);
+        List<CartItemDto> cartItems = new ArrayList<>();
+        double totalCost = 0;
+        for (CartEntity cart: cartList) {
+            CartItemDto cartItemDto = new CartItemDto(cart);
+            totalCost += cartItemDto.getQuantity() * cart.getProduct().getSalePrice();
+            cartItems.add(cartItemDto);
+        }
+
+        CartDto cartDto = new CartDto();
+        cartDto.setTotalCost(totalCost);
+        cartDto.setCartItems(cartItems);
+        return  cartDto;
     }
 
     @Override
@@ -40,11 +59,11 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public Double totalPrice(Optional<UserEntity> userEntity) {
+    public Double totalPrice(UserEntity userEntity) {
         List<CartEntity> list = cartRepository.findByUser(userEntity);
         double total = 0;
         for (CartEntity cart : list) {
-            total += cart.getNumber() + cart.getProduct().getSalePrice();
+            total += cart.getQuantity() + cart.getProduct().getSalePrice();
         }
         return total;
     }

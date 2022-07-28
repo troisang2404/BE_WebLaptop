@@ -8,12 +8,11 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@EqualsAndHashCode(callSuper = true)
 @Getter
 @Setter
 @Entity
 @Table(name = "role")
-public class RoleEntity extends Auditable{
+public class RoleEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

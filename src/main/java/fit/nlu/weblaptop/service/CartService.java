@@ -1,22 +1,24 @@
 package fit.nlu.weblaptop.service;
 
+import fit.nlu.weblaptop.dto.CartDto;
 import fit.nlu.weblaptop.entity.CartEntity;
 import fit.nlu.weblaptop.entity.ProductEntity;
 import fit.nlu.weblaptop.entity.UserEntity;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface CartService {
     void save(CartEntity cartEntity);
 
-    List<CartEntity> findAllByUser(Optional<UserEntity> userEntity);
+    List<CartEntity> findAllByUser(UserEntity userEntity);
+
+    CartDto listCartItems(UserEntity user);
 
     void deleteById(Long id);
 
     CartEntity findOneById(Long id);
 
-    Double totalPrice(Optional<UserEntity> userEntity);
+    Double totalPrice(UserEntity userEntity);
 
     CartEntity findOneByProduct(ProductEntity productEntity);
 

@@ -1,5 +1,6 @@
 package fit.nlu.weblaptop.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,6 +25,7 @@ public class AddressEntity {
     private VillageEntity village;
 
     @OneToOne
+    @JsonIgnore
     private OrdersEntity orders;
 
 }

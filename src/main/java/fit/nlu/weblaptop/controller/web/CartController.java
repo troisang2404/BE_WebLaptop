@@ -1,22 +1,21 @@
 package fit.nlu.weblaptop.controller.web;
 
+import fit.nlu.weblaptop.dto.CartDto;
 import fit.nlu.weblaptop.entity.CartEntity;
+import fit.nlu.weblaptop.entity.ProductEntity;
 import fit.nlu.weblaptop.entity.UserEntity;
-import fit.nlu.weblaptop.payload.response.ResponseObject;
+import fit.nlu.weblaptop.dto.response.ResponseObject;
+import fit.nlu.weblaptop.security.service.UserDetailServiceImpl;
 import fit.nlu.weblaptop.service.CartService;
 import fit.nlu.weblaptop.service.ProductService;
 import fit.nlu.weblaptop.service.UserService;
 import fit.nlu.weblaptop.utils.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000/")
@@ -30,14 +29,62 @@ public class CartController {
     @Autowired
     private CartService cartService;
 
+    @Autowired
+    private UserDetailServiceImpl userDetailService;
+
     @GetMapping("/cart")
     public ResponseEntity<?> showCart() {
-//        if (SecurityUtil.getPrincipal() == null) {
-//            return ResponseEntity.ok(new ResponseObject("ok","Bạn cần đăng nhập",""));
-//        } else {
-            Optional<UserEntity> userEntity = userService.findByUsername(SecurityUtil.getPrincipal().getUsername());
-            List<CartEntity> listCart = cartService.findAllByUser(userEntity);
-            return ResponseEntity.ok(new ResponseObject("ok","Giỏ hàng",userEntity));
-//        }
+        if (SecurityUtil.getPrincipal() == null) {
+            return ResponseEntity.ok(new ResponseObject("failed", "Bạn cần đang nhập", ""));
+        } else {
+            UserEntity userEntity = userService.findOneByUsername(SecurityUtil.getPrincipal().getUsername());
+            CartDto listCart = cartService.listCartItems(userEntity);
+            return ResponseEntity.ok(listCart);
+        }
     }
+
+    @PostMapping("/addCart")
+    public ResponseEntity<?> addCart(@RequestParam("id") Long id, @RequestBody CartEntity cartEntity) {
+        if (SecurityUtil.getPrincipal() != null) {
+            ProductEntity productEntity = productService.findOneById(id);
+            if (cartService.findOneByProduct(productEntity) == null) {
+                UserEntity userEntity = userService.findOneByUsername(SecurityUtil.getPrincipal().getUsername());
+                cartEntity.setProduct(productEntity);
+                cartEntity.setUser(userEntity);
+                cartEntity.setQuantity(1);
+                cartService.save(cartEntity);
+                return new ResponseEntity(new ResponseObject("ok", "Thêm thành công", null), HttpStatus.CREATED);
+            } else {
+                return ResponseEntity.ok(new ResponseObject("", "Đã được thêm vào giỏ hàng", null));
+            }
+        } else
+            return ResponseEntity.ok(new ResponseObject("failed", "Bạn cần đăng nhập", null));
+    }
+
+    @PostMapping("/removeItem")
+    @ResponseBody
+    public ResponseEntity<?> removeItem(@RequestParam("id") Long id) {
+        try {
+            cartService.deleteById(id);
+            return ResponseEntity.ok(new ResponseObject("", "Sản phẩm đã được xóa", id));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.ok(new ResponseObject("", "Lỗi xoá sản phẩm", id));
+        }
+    }
+
+    @PostMapping("/addItem")
+    @ResponseBody
+    public ResponseEntity<?> addItem(@RequestParam("id") Long id, @RequestParam("quantity") Integer quantity) {
+        try {
+            CartEntity cartEntity = cartService.findOneById(id);
+            cartEntity.setQuantity(quantity);
+            cartService.save(cartEntity);
+            return ResponseEntity.ok(new ResponseObject("", "Cập nhật thành công", cartEntity.getProduct().getSalePrice() * quantity));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.ok(new ResponseObject("", "Lỗi cập nhật số lượng", null));
+        }
+    }
+
 }

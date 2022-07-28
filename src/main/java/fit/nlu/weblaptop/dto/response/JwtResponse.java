@@ -1,12 +1,11 @@
-package fit.nlu.weblaptop.payload.response;
+package fit.nlu.weblaptop.dto.response;
 
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 import java.util.Collection;
+import java.util.List;
 
 @Getter
 @Setter
@@ -19,13 +18,13 @@ public class JwtResponse {
     private String name;
     //    private String phone;
 //    private Integer status;
-    private Collection<? extends GrantedAuthority> roles;
+    private List<String> roles;
 
-    public JwtResponse(String token, String username, String email, String name, Collection<? extends GrantedAuthority> authorities) {
+    public JwtResponse(String token, String username, String email, String name, List<String> roles) {
         this.token = token;
         this.username = username;
         this.email = email;
         this.name = name;
-        this.roles = authorities;
+        this.roles = roles;
     }
 }

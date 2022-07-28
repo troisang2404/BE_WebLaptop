@@ -14,7 +14,7 @@ public class JwtTokenProvider {
     private static final Logger logger = LoggerFactory.getLogger(JwtTokenProvider.class);
 
     // Đoạn JWT_SECRET này là bí mật, chỉ có phía server biết
-    private String jwtSecret = "schoolfm";
+    private String jwtSecret = "schoolfm01092020";
 
     //Thời gian có hiệu lực của chuỗi jwt
     private int jwtExpirationMs = 86400; //1 ngày = 84600s
