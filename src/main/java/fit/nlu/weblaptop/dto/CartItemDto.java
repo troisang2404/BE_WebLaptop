@@ -19,5 +19,4 @@ public class CartItemDto {
         this.quantity = cart.getQuantity();
         this.setProduct(cart.getProduct());
     }
-
 }

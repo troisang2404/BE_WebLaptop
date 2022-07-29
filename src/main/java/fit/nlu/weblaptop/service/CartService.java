@@ -18,7 +18,7 @@ public interface CartService {
 
     CartEntity findOneById(Long id);
 
-    Double totalPrice(UserEntity userEntity);
+    Double totalCost(UserEntity userEntity);
 
     CartEntity findOneByProduct(ProductEntity productEntity);
 

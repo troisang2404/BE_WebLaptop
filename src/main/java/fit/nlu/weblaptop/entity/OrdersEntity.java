@@ -23,7 +23,7 @@ public class OrdersEntity extends Auditable {
     /**
      * Khóa ngoại
      */
-    @JsonIgnore
+//    @JsonIgnore
     @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<OrderDetailEntity> orders; //Danh sách chi tiết đơn đặt hàng
 

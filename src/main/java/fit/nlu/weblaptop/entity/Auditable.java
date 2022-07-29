@@ -23,14 +23,12 @@ public abstract class Auditable {
 
     @JsonIgnore
     @CreatedDate
-    @Column(name = "created_date", nullable = false,
-            columnDefinition = "DEFAULT CURRENT_TIMESTAMP")
+    @Column(name = "created_date", nullable = false)
     private Date createdDate;
 
     @JsonIgnore
     @LastModifiedDate
-    @Column(name = "modified_date", nullable = false,
-            columnDefinition = "DEFAULT CURRENT_TIMESTAMP")
+    @Column(name = "modified_date", nullable = false)
     private Date modifiedDate;
 
     @JsonIgnore

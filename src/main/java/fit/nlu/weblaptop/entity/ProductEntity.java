@@ -17,7 +17,7 @@ import java.util.List;
 public class ProductEntity extends Auditable {
 
     private String name;
-//    @JsonIgnore
+    //    @JsonIgnore
     @Column(columnDefinition = "TEXT") // Định nhĩa kiểu dữ liệu cho 'description' = TEXT
     private String description;     //Mô tả
 
@@ -33,6 +33,10 @@ public class ProductEntity extends Auditable {
     private Integer stock;          //Số lượng sản phẩm trong kho
     private Integer status;         //Trạng thái của sản phẩm
 
+    //link ảnh
+    private String imageLink1;
+    private String imageLink2;
+    private String imageLink3;
     /**
      * Khóa ngoại
      * CascadeType.ALL - Khi insert product sẽ insert luôn image
@@ -46,8 +50,8 @@ public class ProductEntity extends Auditable {
 //    @JsonIgnore
     private ConfigEntity config;//Cấu hình sản phẩm
 
-    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<ImageEntity> image;//Một sản phẩm có thể có nhiều ảnh
+//    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+//    private List<ImageEntity> image;//Một sản phẩm có thể có nhiều ảnh
 
     @OneToMany(mappedBy = "product")
     @JsonIgnore

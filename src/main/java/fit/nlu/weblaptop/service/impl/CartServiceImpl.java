@@ -21,13 +21,13 @@ public class CartServiceImpl implements CartService {
     CartRepository cartRepository;
 
     @Override
-    public void save(CartEntity cartEntity) {
-        cartRepository.save(cartEntity);
+    public void save(CartEntity cart) {
+        cartRepository.save(cart);
     }
 
     @Override
-    public List<CartEntity> findAllByUser(UserEntity userEntity) {
-        return cartRepository.findByUser(userEntity);
+    public List<CartEntity> findAllByUser(UserEntity user) {
+        return cartRepository.findByUser(user);
     }
 
     @Override
@@ -59,8 +59,8 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public Double totalPrice(UserEntity userEntity) {
-        List<CartEntity> list = cartRepository.findByUser(userEntity);
+    public Double totalCost(UserEntity user) {
+        List<CartEntity> list = cartRepository.findByUser(user);
         double total = 0;
         for (CartEntity cart : list) {
             total += cart.getQuantity() + cart.getProduct().getSalePrice();
@@ -69,13 +69,13 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public CartEntity findOneByProduct(ProductEntity productEntity) {
-        return cartRepository.findOneByProduct(productEntity);
+    public CartEntity findOneByProduct(ProductEntity product) {
+        return cartRepository.findOneByProduct(product);
     }
 
     @Override
     @Transactional
-    public void deleteByUser(UserEntity userEntity) {
-        cartRepository.deleteByUser(userEntity);
+    public void deleteByUser(UserEntity user) {
+        cartRepository.deleteByUser(user);
     }
 }
