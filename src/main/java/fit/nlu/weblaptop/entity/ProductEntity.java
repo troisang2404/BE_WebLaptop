@@ -46,12 +46,17 @@ public class ProductEntity extends Auditable {
 //    @JsonIgnore
     private BrandEntity brand;//Một sản phẩm chỉ thuộc một danh mục hàng hóa
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "product")
-//    @JsonIgnore
-    private ConfigEntity config;//Cấu hình sản phẩm
-
-//    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-//    private List<ImageEntity> image;//Một sản phẩm có thể có nhiều ảnh
+    //Cấu hình sản phẩm
+    private String cpu;             //CPU
+    private String ram;             //RAM
+    private String disk;            //Ổ cứng
+    private String screen;          //Màn hình
+    private String card;            //Card đồ họa
+    private String port;            //Cân nặng
+    private String os;              //Hệ điều hành
+    private String design;          //Thiết kế
+    private String size;            //Kích thước
+    private String year;            //Năm ra mắt
 
     @OneToMany(mappedBy = "product")
     @JsonIgnore

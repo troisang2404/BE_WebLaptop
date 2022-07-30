@@ -1,6 +1,8 @@
 package fit.nlu.weblaptop.controller.web;
 
 import fit.nlu.weblaptop.dto.CartDto;
+import fit.nlu.weblaptop.dto.OrderDetailDto;
+import fit.nlu.weblaptop.dto.OrderDto;
 import fit.nlu.weblaptop.dto.response.ResponseObject;
 import fit.nlu.weblaptop.entity.*;
 import fit.nlu.weblaptop.repository.VillageRepository;
@@ -33,22 +35,32 @@ public class OrderController {
             return ResponseEntity.ok(new ResponseObject("", "Bạn cần đang nhập", ""));
         } else {
             UserEntity user = userService.findOneByUsername(SecurityUtil.getPrincipal().getUsername());
-//            CartDto listCart = cartService.listCartItems(userEntity);
-//            return ResponseEntity.ok(listCart);
-//            return ResponseEntity.ok(ordersService.findAllFetchEager());
-            OrdersEntity orders = ordersService.findOneByUser(user);
+            OrderDto orders = ordersService.getOrders(user);
             return ResponseEntity.ok(orders);
         }
     }
+
+//    @GetMapping("/order-detail")
+//    public ResponseEntity<?> getOrderDetail() {
+//        if (SecurityUtil.getPrincipal() == null) {
+//            return ResponseEntity.ok(new ResponseObject("", "Bạn cần đang nhập", ""));
+//        } else {
+//            UserEntity userEntity = userService.findOneByUsername(SecurityUtil.getPrincipal().getUsername());
+//            OrdersEntity ordersEntity = ordersService.findByUser(userEntity);
+//            List<OrderDetailEntity> orders = ordersService.getOrderDetail(ordersEntity);
+//            return ResponseEntity.ok(ordersEntity);
+//        }
+//    }
 
     @PostMapping("/order")
     public ResponseEntity<?> order(OrdersEntity ordersEntity, OrderDetailEntity orderDetailEntity) {
         if (SecurityUtil.getPrincipal() == null) {
             return ResponseEntity.ok(new ResponseObject("", "Bạn cần đang nhập", ""));
         } else {
-            UserEntity userEntity = userService.findOneByUsername(SecurityUtil.getPrincipal().getUsername());
-            ordersEntity.setUser(userEntity);
-            List<CartEntity> cartList = cartService.findAllByUser(userEntity);
+            UserEntity user = userService.findOneByUsername(SecurityUtil.getPrincipal().getUsername());
+            ordersEntity.setUser(user);
+//            CartDto listCart = cartService.listCartItems(user);
+            List<CartEntity> cartList = cartService.findAllByUser(user);
             List<OrderDetailEntity> detailEntityList = new ArrayList<>();
             double totalCost = 0;
             for (CartEntity cart : cartList) {
@@ -69,7 +81,7 @@ public class OrderController {
             ordersEntity.getAddress().setOrders(ordersEntity);
 
             ordersService.save(ordersEntity);
-            cartService.deleteByUser(userEntity);
+            cartService.deleteByUser(user);
 
             return ResponseEntity.ok(new ResponseObject("", "", ordersEntity));
         }

@@ -20,6 +20,4 @@ public interface BrandService {
 
     boolean existsById(Long id);
 
-    List<BrandEntity> findAll();
-
 }

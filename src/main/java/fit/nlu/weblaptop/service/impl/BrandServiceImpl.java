@@ -51,10 +51,4 @@ public class BrandServiceImpl implements BrandService {
     }
 
 
-    @Override
-    public List<BrandEntity> findAll() {
-        return brandRepository.findAll();
-    }
-
-
 }

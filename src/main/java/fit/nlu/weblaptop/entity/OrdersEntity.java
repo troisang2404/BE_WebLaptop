@@ -1,6 +1,7 @@
 package fit.nlu.weblaptop.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import fit.nlu.weblaptop.dto.OrderDetailDto;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;

@@ -29,9 +29,6 @@ public class CartController {
     @Autowired
     private CartService cartService;
 
-    @Autowired
-    private UserDetailServiceImpl userDetailService;
-
     @GetMapping("/cart")
     public ResponseEntity<?> showCart() {
         if (SecurityUtil.getPrincipal() == null) {
@@ -44,21 +41,23 @@ public class CartController {
     }
 
     @PostMapping("/addCart")
-    public ResponseEntity<?> addCart(@RequestParam("id") Long id, @RequestBody CartEntity cartEntity) {
-        if (SecurityUtil.getPrincipal() != null) {
-            ProductEntity productEntity = productService.findOneById(id);
-            if (cartService.findOneByProduct(productEntity) == null) {
-                UserEntity userEntity = userService.findOneByUsername(SecurityUtil.getPrincipal().getUsername());
-                cartEntity.setProduct(productEntity);
-                cartEntity.setUser(userEntity);
+    public ResponseEntity<?> addCart(@RequestParam("id") Long id) {
+        CartEntity cartEntity = new CartEntity();
+        if (SecurityUtil.getPrincipal() == null) {
+            return ResponseEntity.ok(new ResponseObject("failed", "Bạn cần đăng nhập", null));
+        } else {
+            ProductEntity product = productService.findOneById(id);
+            if (cartService.findOneByProduct(product) == null) {
+                UserEntity user = userService.findOneByUsername(SecurityUtil.getPrincipal().getUsername());
+                cartEntity.setProduct(product);
+                cartEntity.setUser(user);
                 cartEntity.setQuantity(1);
                 cartService.save(cartEntity);
                 return new ResponseEntity(new ResponseObject("ok", "Thêm thành công", null), HttpStatus.CREATED);
             } else {
-                return ResponseEntity.ok(new ResponseObject("", "Đã được thêm vào giỏ hàng", null));
+                return ResponseEntity.ok(new ResponseObject("failed", "Đã được thêm vào giỏ hàng", null));
             }
-        } else
-            return ResponseEntity.ok(new ResponseObject("failed", "Bạn cần đăng nhập", null));
+        }
     }
 
     @PostMapping("/removeItem")
