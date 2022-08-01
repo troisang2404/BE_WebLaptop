@@ -34,7 +34,7 @@ public class BrandController {
         Optional<BrandEntity> foundBrand = brandService.findById(id);
         return foundBrand.isPresent() ?
                 ResponseEntity.ok(new ResponseObject("ok", "", foundBrand)) :
-                ResponseEntity.ok(new ResponseObject("failed", "Cannot find product with id = " + id, ""));
+                ResponseEntity.ok(new ResponseObject("failed", "Không tìm thấy thương hiệu với id = " + id, ""));
     }
 
 
@@ -47,11 +47,11 @@ public class BrandController {
         List<BrandEntity> foundBrands = brandService.findByBrandName(newBrand.getName().trim());
         if (foundBrands.size() > 0) {
             return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(
-                    new ResponseObject("failed", "Brand name already taken", "")
+                    new ResponseObject("failed", "Tên thương hiệu đã được sử dụng", "")
             );
         }
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("ok", "Insert brand successfully", brandService.save(newBrand))
+                new ResponseObject("ok", "Thêm thương hiệu thành công", brandService.save(newBrand))
         );
     }
 
@@ -74,7 +74,7 @@ public class BrandController {
                     return brandService.save(newBrand);
                 });
         return ResponseEntity.ok(
-                new ResponseObject("ok", "Update brand successfully", updateBrand));
+                new ResponseObject("ok", "Thêm thương hiệu thành công", updateBrand));
     }
 
     /**
@@ -88,11 +88,11 @@ public class BrandController {
         if(exists) {
             brandService.deleteById(id);
             return ResponseEntity.status(HttpStatus.OK).body(
-                    new ResponseObject("ok", "Delete brand successfully", "")
+                    new ResponseObject("ok", "Xoá thương hiệu thành công", "")
             );
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                new ResponseObject("failed", "Cannot find brand to delete", "")
+                new ResponseObject("failed", "Không thể tìm thấy thương hiệu để xóa", "")
         );
     }
 }

@@ -49,7 +49,7 @@ public class ProductController {
         return foundProduct.isPresent() ?
                 ResponseEntity.ok(foundProduct) :
                 ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                        new ResponseObject("failed", "Cannot find product with id = " + id, "")
+                        new ResponseObject("failed", "Không tìm thấy sản phẩm với id = " + id, "")
                 );
     }
 
@@ -62,11 +62,11 @@ public class ProductController {
         List<ProductEntity> foundProducts = productService.findByProductName(newProduct.getName().trim());
         if (foundProducts.size() > 0) {
             return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(
-                    new ResponseObject("failed", "Product name already taken", "")
+                    new ResponseObject("failed", "Tên sản phẩm đã được sử dụng", "")
             );
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(
-                new ResponseObject("ok", "Insert product successfully", productService.save(newProduct))
+                new ResponseObject("ok", "Thêm sản phẩm thành công", productService.save(newProduct))
         );
     }
 
@@ -105,7 +105,7 @@ public class ProductController {
                     return productService.save(newProduct);
                 });
         return ResponseEntity.ok(
-                new ResponseObject("ok", "Update product successfully", updateProduct));
+                new ResponseObject("ok", "Cập nhật sản phẩm thành công", updateProduct));
     }
 
     /**
@@ -113,17 +113,17 @@ public class ProductController {
      *
      * @param id sản phẩm
      */
-//    @DeleteMapping("/{id}")
-//    public ResponseEntity<ResponseObject> deleteProduct(@PathVariable Long id) {
-//        boolean exists = productService.existsById(id);
-//        if (exists) {
-//            brandService.deleteById(id);
-//            return ResponseEntity.status(HttpStatus.OK).body(
-//                    new ResponseObject("ok", "Delete product successfully", "")
-//            );
-//        }
-//        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-//                new ResponseObject("failed", "Cannot find product to delete", "")
-//        );
-//    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ResponseObject> deleteProduct(@PathVariable Long id) {
+        boolean exists = productService.existsById(id);
+        if (exists) {
+            productService.deleteById(id);
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new ResponseObject("ok", "Xoá sản phẩm thành công", "")
+            );
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                new ResponseObject("failed", "Không thể tìm thấy sản phẩm để xóa", "")
+        );
+    }
 }

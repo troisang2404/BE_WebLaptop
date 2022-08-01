@@ -51,18 +51,18 @@ public class OrderController {
 //    }
 
     @PostMapping("/order")
-    public ResponseEntity<?> order(@RequestBody OrdersEntity ordersEntity,
-                                    OrderDetailEntity orderDetailEntity) {
+    public ResponseEntity<?> order(@RequestBody OrdersEntity ordersEntity) {
         if (SecurityUtil.getPrincipal() == null) {
             return ResponseEntity.ok(new ResponseObject("", "Bạn cần đang nhập", ""));
         } else {
             UserEntity user = userService.findOneByUsername(SecurityUtil.getPrincipal().getUsername());
             ordersEntity.setUser(user);
-//            CartDto listCart = cartService.listCartItems(user);
+
             List<CartEntity> cartList = cartService.findAllByUser(user);
             List<OrderDetailEntity> detailEntityList = new ArrayList<>();
             double totalCost = 0;
             for (CartEntity cart : cartList) {
+                OrderDetailEntity orderDetailEntity = new OrderDetailEntity();
                 orderDetailEntity.setPrice(cart.getProduct().getSalePrice());
                 orderDetailEntity.setAmount(cart.getQuantity());
                 orderDetailEntity.setProduct(cart.getProduct());
@@ -75,11 +75,6 @@ public class OrderController {
             ordersEntity.setStatus(0);
             ordersEntity.setOrders(detailEntityList);
 
-//            try{
-//                Long idV = ordersEntity.getAddress().getVillage().getId();
-//            } catch (Exception e){
-//                e.printStackTrace();
-//            }
             VillageEntity villageEntity = villageRepository.findOneById(ordersEntity.getAddress().getVillage().getId());
             ordersEntity.getAddress().setVillage(villageEntity);
             ordersEntity.getAddress().setOrders(ordersEntity);
@@ -87,7 +82,7 @@ public class OrderController {
             ordersService.save(ordersEntity);
             cartService.deleteByUser(user);
 
-            return ResponseEntity.ok(new ResponseObject("ok", "Đặt hàng thành công", ordersEntity));
+            return ResponseEntity.ok(new ResponseObject("ok", "Đặt hàng thành công", ""));
         }
     }
 }

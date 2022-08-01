@@ -72,4 +72,14 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductEntity> findProductTop20Tr() {
         return productRepository.findByPriceTop20tr();
     }
+
+    @Override
+    public boolean existsById(Long id) {
+        return productRepository.existsById(id);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        productRepository.deleteById(id);
+    }
 }

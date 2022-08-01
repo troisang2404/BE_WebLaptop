@@ -31,4 +31,8 @@ public interface ProductService {
     List<ProductEntity> findProductTop20Tr();
 
     List<ProductEntity> findByProductName(String productName);
+
+    boolean existsById(Long id);
+
+    void deleteById(Long id);
 }
