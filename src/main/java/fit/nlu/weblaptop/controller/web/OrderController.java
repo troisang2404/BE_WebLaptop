@@ -1,7 +1,5 @@
 package fit.nlu.weblaptop.controller.web;
 
-import fit.nlu.weblaptop.dto.CartDto;
-import fit.nlu.weblaptop.dto.OrderDetailDto;
 import fit.nlu.weblaptop.dto.OrderDto;
 import fit.nlu.weblaptop.dto.response.ResponseObject;
 import fit.nlu.weblaptop.entity.*;
@@ -35,7 +33,7 @@ public class OrderController {
             return ResponseEntity.ok(new ResponseObject("", "Bạn cần đang nhập", ""));
         } else {
             UserEntity user = userService.findOneByUsername(SecurityUtil.getPrincipal().getUsername());
-            OrderDto orders = ordersService.getOrders(user);
+            List<OrderDto> orders = ordersService.getOrders(user);
             return ResponseEntity.ok(orders);
         }
     }
@@ -48,12 +46,13 @@ public class OrderController {
 //            UserEntity userEntity = userService.findOneByUsername(SecurityUtil.getPrincipal().getUsername());
 //            OrdersEntity ordersEntity = ordersService.findByUser(userEntity);
 //            List<OrderDetailEntity> orders = ordersService.getOrderDetail(ordersEntity);
-//            return ResponseEntity.ok(ordersEntity);
+//            return ResponseEntity.ok(orders);
 //        }
 //    }
 
     @PostMapping("/order")
-    public ResponseEntity<?> order(OrdersEntity ordersEntity, OrderDetailEntity orderDetailEntity) {
+    public ResponseEntity<?> order(@RequestBody OrdersEntity ordersEntity,
+                                    OrderDetailEntity orderDetailEntity) {
         if (SecurityUtil.getPrincipal() == null) {
             return ResponseEntity.ok(new ResponseObject("", "Bạn cần đang nhập", ""));
         } else {
@@ -76,6 +75,11 @@ public class OrderController {
             ordersEntity.setStatus(0);
             ordersEntity.setOrders(detailEntityList);
 
+//            try{
+//                Long idV = ordersEntity.getAddress().getVillage().getId();
+//            } catch (Exception e){
+//                e.printStackTrace();
+//            }
             VillageEntity villageEntity = villageRepository.findOneById(ordersEntity.getAddress().getVillage().getId());
             ordersEntity.getAddress().setVillage(villageEntity);
             ordersEntity.getAddress().setOrders(ordersEntity);
@@ -83,7 +87,7 @@ public class OrderController {
             ordersService.save(ordersEntity);
             cartService.deleteByUser(user);
 
-            return ResponseEntity.ok(new ResponseObject("", "", ordersEntity));
+            return ResponseEntity.ok(new ResponseObject("ok", "Đặt hàng thành công", ordersEntity));
         }
     }
 }

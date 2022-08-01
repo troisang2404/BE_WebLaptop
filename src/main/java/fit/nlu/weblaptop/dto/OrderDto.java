@@ -1,12 +1,9 @@
 package fit.nlu.weblaptop.dto;
 
 import fit.nlu.weblaptop.entity.AddressEntity;
-import fit.nlu.weblaptop.entity.OrderDetailEntity;
-import fit.nlu.weblaptop.entity.OrdersEntity;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter

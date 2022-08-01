@@ -34,31 +34,36 @@ public class OrderServiceImpl implements OrdersService {
 
     @Override
     public OrdersEntity findByUser(UserEntity userEntity) {
-        return ordersRepository.findByUser(userEntity);
+        return ordersRepository.findOneByUser(userEntity);
     }
 
     @Override
-    public OrderDto getOrders(UserEntity user) {
-        OrdersEntity ordersEntity = ordersRepository.findByUser(user);
-        List<OrderDetailEntity> orderDetailList = orderDetailRepository.findByOrders(ordersEntity);
-        List<OrderDetailDto> orderDetailItems = new ArrayList<>();
-        for (OrderDetailEntity orderDetail : orderDetailList) {
-            OrderDetailDto orderDetailItemDto = new OrderDetailDto(orderDetail);
-            orderDetailItems.add(orderDetailItemDto);
-        }
-        OrderDto orderDto = new OrderDto();
-        orderDto.setFullName(ordersEntity.getUser().getName());
-        orderDto.setPhone(ordersEntity.getPhone());
-        orderDto.setNote(ordersEntity.getNote());
-        orderDto.setTotal(ordersEntity.getTotal());
-        orderDto.setStatus(ordersEntity.getStatus());
-        orderDto.setOrderDetail(orderDetailItems);
-        orderDto.setAddress(ordersEntity.getAddress());
-        return orderDto;
+    public List<OrderDto> getOrders(UserEntity user) {
+        List<OrdersEntity> ordersEntity = ordersRepository.findByUser(user);
+        List<OrderDto> orderDtoList = new ArrayList<>();
+        ordersEntity.forEach(orders -> {
+            List<OrderDetailEntity> orderDetailList = orderDetailRepository.findByOrders(orders);
+            List<OrderDetailDto> orderDetailItems = new ArrayList<>();
+            for (OrderDetailEntity orderDetail : orderDetailList) {
+                OrderDetailDto orderDetailItemDto = new OrderDetailDto(orderDetail);
+                orderDetailItems.add(orderDetailItemDto);
+            }
+            OrderDto orderDto = new OrderDto();
+            orderDto.setFullName(orders.getUser().getName());
+            orderDto.setPhone(orders.getPhone());
+            orderDto.setNote(orders.getNote());
+            orderDto.setTotal(orders.getTotal());
+            orderDto.setStatus(orders.getStatus());
+            orderDto.setOrderDetail(orderDetailItems);
+            orderDto.setAddress(orders.getAddress());
+            orderDtoList.add(orderDto);
+        });
+
+        return orderDtoList;
     }
 
-    @Override
-    public List<OrderDetailEntity> getOrderDetail(OrdersEntity orders) {
-        return orderDetailRepository.findByOrders(orders);
-    }
+//    @Override
+//    public List<OrderDetailEntity> getOrderDetail(OrdersEntity orders) {
+//        return orderDetailRepository.findByOrders(orders);
+//    }
 }

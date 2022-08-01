@@ -54,10 +54,10 @@ public class ProductController {
     }
 
     /**
-     * Lưu sản phẩm
+     * Thêm sản phẩm
      */
     @PostMapping("/insert")
-    public ResponseEntity<ResponseObject> insertBrand(@RequestBody ProductEntity newProduct) {
+    public ResponseEntity<ResponseObject> insertProduct(@RequestBody ProductEntity newProduct) {
         //2 product must not have the same name !
         List<ProductEntity> foundProducts = productService.findByProductName(newProduct.getName().trim());
         if (foundProducts.size() > 0) {
@@ -65,10 +65,65 @@ public class ProductController {
                     new ResponseObject("failed", "Product name already taken", "")
             );
         }
-//        newProduct.getImage().forEach(image -> image.setProduct(newProduct)); //Set product cho image
-//        newProduct.getConfig().setProduct(newProduct);
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 new ResponseObject("ok", "Insert product successfully", productService.save(newProduct))
         );
     }
+
+    /**
+     * Cập nhật sản phẩm
+     *
+     * @param id thương hiệu
+     */
+    @PutMapping("/{id}")
+    public ResponseEntity<ResponseObject> updateProduct(@RequestBody ProductEntity newProduct, @PathVariable Long id) {
+        ProductEntity updateProduct = productService.findById(id)
+                .map(product -> {
+                    product.setName(newProduct.getName());
+                    product.setDescription(newProduct.getDescription());
+                    product.setOriginalPrice(newProduct.getOriginalPrice());
+                    product.setSalePrice(newProduct.getSalePrice());
+                    product.setStatus(newProduct.getStatus());
+                    product.setStock(newProduct.getStock());
+                    product.setBrand(newProduct.getBrand());
+                    product.setImageLink1(newProduct.getImageLink1());
+                    product.setImageLink2(newProduct.getImageLink2());
+                    product.setImageLink3(newProduct.getImageLink3());
+                    product.setCard(newProduct.getCard());
+                    product.setCpu(newProduct.getCpu());
+                    product.setDesign(newProduct.getDesign());
+                    product.setDisk(newProduct.getDisk());
+                    product.setOs(newProduct.getOs());
+                    product.setPort(newProduct.getPort());
+                    product.setRam(newProduct.getRam());
+                    product.setScreen(newProduct.getScreen());
+                    product.setSize(newProduct.getSize());
+                    product.setYear(newProduct.getYear());
+                    return productService.save(product);
+                }).orElseGet(() -> {
+                    newProduct.setId(id);
+                    return productService.save(newProduct);
+                });
+        return ResponseEntity.ok(
+                new ResponseObject("ok", "Update product successfully", updateProduct));
+    }
+
+    /**
+     * Xóa sản phẩm
+     *
+     * @param id sản phẩm
+     */
+//    @DeleteMapping("/{id}")
+//    public ResponseEntity<ResponseObject> deleteProduct(@PathVariable Long id) {
+//        boolean exists = productService.existsById(id);
+//        if (exists) {
+//            brandService.deleteById(id);
+//            return ResponseEntity.status(HttpStatus.OK).body(
+//                    new ResponseObject("ok", "Delete product successfully", "")
+//            );
+//        }
+//        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+//                new ResponseObject("failed", "Cannot find product to delete", "")
+//        );
+//    }
 }
