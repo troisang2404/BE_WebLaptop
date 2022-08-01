@@ -38,18 +38,6 @@ public class OrderController {
         }
     }
 
-//    @GetMapping("/order-detail")
-//    public ResponseEntity<?> getOrderDetail() {
-//        if (SecurityUtil.getPrincipal() == null) {
-//            return ResponseEntity.ok(new ResponseObject("", "Bạn cần đang nhập", ""));
-//        } else {
-//            UserEntity userEntity = userService.findOneByUsername(SecurityUtil.getPrincipal().getUsername());
-//            OrdersEntity ordersEntity = ordersService.findByUser(userEntity);
-//            List<OrderDetailEntity> orders = ordersService.getOrderDetail(ordersEntity);
-//            return ResponseEntity.ok(orders);
-//        }
-//    }
-
     @PostMapping("/order")
     public ResponseEntity<?> order(@RequestBody OrdersEntity ordersEntity) {
         if (SecurityUtil.getPrincipal() == null) {

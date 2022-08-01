@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ProvinceRepository extends JpaRepository<ProvinceEntity, Long> {
+    ProvinceEntity findOneById(Long id);
 }

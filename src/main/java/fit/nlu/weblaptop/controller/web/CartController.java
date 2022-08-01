@@ -40,8 +40,8 @@ public class CartController {
         }
     }
 
-    @PostMapping("/addCart")
-    public ResponseEntity<?> addCart(@RequestParam("id") Long id, CartEntity cartEntity ) {
+    @PostMapping("/addCart/{id}")
+    public ResponseEntity<?> addCart(@PathVariable("id") Long id, CartEntity cartEntity ) {
 //        CartEntity cartEntity = new CartEntity();
         if (SecurityUtil.getPrincipal() == null) {
             return ResponseEntity.ok(new ResponseObject("failed", "Bạn cần đăng nhập", null));

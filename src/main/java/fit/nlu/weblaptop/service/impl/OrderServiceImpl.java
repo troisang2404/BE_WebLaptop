@@ -28,16 +28,6 @@ public class OrderServiceImpl implements OrdersService {
     }
 
     @Override
-    public OrdersEntity findOneById(Long id) {
-        return ordersRepository.findOneById(id);
-    }
-
-    @Override
-    public OrdersEntity findByUser(UserEntity userEntity) {
-        return ordersRepository.findOneByUser(userEntity);
-    }
-
-    @Override
     public List<OrderDto> getOrders(UserEntity user) {
         List<OrdersEntity> ordersEntity = ordersRepository.findByUser(user);
         List<OrderDto> orderDtoList = new ArrayList<>();
@@ -62,8 +52,4 @@ public class OrderServiceImpl implements OrdersService {
         return orderDtoList;
     }
 
-//    @Override
-//    public List<OrderDetailEntity> getOrderDetail(OrdersEntity orders) {
-//        return orderDetailRepository.findByOrders(orders);
-//    }
 }

@@ -21,9 +21,6 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @Autowired
-    private BrandService brandService;
-
     /**
      * Hiển thị danh sách sản phẩm theo phân trang
      */

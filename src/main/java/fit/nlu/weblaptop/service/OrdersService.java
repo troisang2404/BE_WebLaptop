@@ -8,8 +8,5 @@ import java.util.List;
 
 public interface OrdersService {
     void save(OrdersEntity ordersEntity);
-    OrdersEntity findOneById(Long id);
-    OrdersEntity findByUser(UserEntity userEntity);
     List<OrderDto> getOrders(UserEntity user);
-//    List<OrderDetailEntity> getOrderDetail(OrdersEntity ordersEntity);
 }
