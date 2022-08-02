@@ -15,7 +15,7 @@ public class OrderDto {
     private Double total; //Tổng giá trị đơn hàng
     private Integer status; //Trạng thái đơn hàng: 0-Chưa xác nhận | 1-Đã xác nhận
     private List<OrderDetailDto> orderDetail; //Danh sách chi tiết đơn đặt hàng
-    private AddressEntity address; //Địa chỉ giao hàng
+    private String address; //Địa chỉ giao hàng
 
     public OrderDto() {
     }

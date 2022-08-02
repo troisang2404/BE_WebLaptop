@@ -15,7 +15,6 @@ public class CartItemDto {
     public CartItemDto() {
     }
     public CartItemDto(CartEntity cart) {
-        this.id = cart.getId();
         this.quantity = cart.getQuantity();
         this.setProduct(cart.getProduct());
     }

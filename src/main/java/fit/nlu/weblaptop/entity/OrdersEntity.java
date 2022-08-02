@@ -10,8 +10,6 @@ import javax.persistence.*;
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
-@Getter
-@Setter
 @Entity
 @Table(name = "orders")
 public class OrdersEntity extends Auditable {
@@ -37,5 +35,61 @@ public class OrdersEntity extends Auditable {
 
     public String getAddressToString() {
         return address.getDetail() + ", " + address.getVillage().getName() + ", " + address.getVillage().getDistrict().getName() + ", " + address.getVillage().getDistrict().getProvince().getName();
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public Double getTotal() {
+        return total;
+    }
+
+    public void setTotal(Double total) {
+        this.total = total;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public List<OrderDetailEntity> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<OrderDetailEntity> orders) {
+        this.orders = orders;
+    }
+
+    public AddressEntity getAddress() {
+        return address;
+    }
+
+    public void setAddress(AddressEntity address) {
+        this.address = address;
+    }
+
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
     }
 }

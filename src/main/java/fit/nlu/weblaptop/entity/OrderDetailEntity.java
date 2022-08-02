@@ -10,8 +10,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @EqualsAndHashCode(callSuper = true)
-@Getter
-@Setter
 @Entity
 @Table(name = "order_detail")
 public class OrderDetailEntity extends Auditable {
@@ -26,4 +24,36 @@ public class OrderDetailEntity extends Auditable {
     @ManyToOne
     @JoinColumn(name = "product_id")
     private ProductEntity product;
+
+    public Integer getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Integer amount) {
+        this.amount = amount;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public OrdersEntity getOrders() {
+        return orders;
+    }
+
+    public void setOrders(OrdersEntity orders) {
+        this.orders = orders;
+    }
+
+    public ProductEntity getProduct() {
+        return product;
+    }
+
+    public void setProduct(ProductEntity product) {
+        this.product = product;
+    }
 }

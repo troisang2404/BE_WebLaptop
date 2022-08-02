@@ -44,10 +44,10 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@Valid @RequestBody RegisterForm registerForm) {
         if (userService.existsByUsername(registerForm.getUsername())) {
-            return ResponseEntity.ok(new ResponseObject("", "The username existed! Please try again!", ""));
+            return ResponseEntity.ok(new ResponseObject("", "Tên đăng nhập đã tồn tại!", ""));
         }
         if (userService.existsByEmail(registerForm.getEmail())) {
-            return ResponseEntity.ok(new ResponseObject("", "The email existed! Please try again!", ""));
+            return ResponseEntity.ok(new ResponseObject("", "Email đã tồn tại!", ""));
         }
         UserEntity user = new UserEntity(
                 registerForm.getUsername(),
@@ -80,7 +80,7 @@ public class AuthController {
         }
         user.setRoles(roles);
         userService.save(user);
-        return ResponseEntity.ok(new ResponseObject("", "User registered successfully!", ""));
+        return ResponseEntity.ok(new ResponseObject("", "Đăng kí tài khoản thành công", ""));
 
     }
 
@@ -108,9 +108,5 @@ public class AuthController {
                 userDetails.getEmail(),
                 roles
         ));
-    }
-    @GetMapping("/hello")
-    public String adminAccess() {
-        return "Hello World";
     }
 }
